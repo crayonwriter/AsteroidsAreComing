@@ -1,7 +1,9 @@
 package com.crayonwriter.asteroidsarecoming
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 //Annotate this class to make it a table for DAO and give it a new name
@@ -10,7 +12,13 @@ import kotlinx.android.parcel.Parcelize
 
 //Annotate this class to make it a table for DAO and give it a new name
 @Entity(tableName = "asteroid_table")
-data class Asteroid(val id: Long = 0L, val codename: String, val closeApproachDate: String,
-                               val absoluteMagnitude: Double, val estimatedDiameter: Double,
-                               val relativeVelocity: Double, val distanceFromEarth: Double,
-                               val isPotentiallyHazardous: Boolean) : Parcelable
+data class Asteroid(
+    //Annotate each column and give each a custom name, except for the PrimaryKey
+    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    @ColumnInfo(name = "code_name") val codename: String,
+    @ColumnInfo(name = "close_approach_date") val closeApproachDate: String,
+    @ColumnInfo(name = "absolute_magnitude") val absoluteMagnitude: Double,
+    @ColumnInfo(name = "estimated_diameter") val estimatedDiameter: Double,
+    @ColumnInfo(name = "relative_velocity") val relativeVelocity: Double,
+    @ColumnInfo(name = "distance_from_earth") val distanceFromEarth: Double,
+    @ColumnInfo(name = "is_potentially_hazardous") val isPotentiallyHazardous: Boolean) : Parcelable
