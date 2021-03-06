@@ -14,7 +14,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "asteroid_table")
 data class Asteroid(
     //Annotate each column and give each a custom name, except for the PrimaryKey
-    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    @PrimaryKey() val asteroidId: Long,
     @ColumnInfo(name = "code_name") val codename: String,
     @ColumnInfo(name = "close_approach_date") val closeApproachDate: String,
     @ColumnInfo(name = "absolute_magnitude") val absoluteMagnitude: Double,
