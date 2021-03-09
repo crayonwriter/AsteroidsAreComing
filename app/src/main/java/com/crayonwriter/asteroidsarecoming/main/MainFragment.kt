@@ -3,6 +3,7 @@ package com.crayonwriter.asteroidsarecoming.main
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.crayonwriter.asteroidsarecoming.R
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabase
@@ -37,6 +38,18 @@ class MainFragment : Fragment() {
         //Setup databinding, including setting the variable in the layout
         // which we access through the binding object to the viewModel
         binding.mainViewModel = mainViewModel
+
+        //Connect the adapter to the recyclerview. Make a new adapter and assign the adapter
+        //on the recyclerview. Tells the recyclerview to use the adapter to display things on the screen.
+        val adapter = AsteroidAdapter()
+        binding.asteroidRecycler.adapter = adapter
+
+        mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.asteroidData = it
+            }
+        })
+
         binding.lifecycleOwner = this
 
         return binding.root
