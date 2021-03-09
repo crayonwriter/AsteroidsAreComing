@@ -11,11 +11,11 @@ class MainViewModel(
     val database: AsteroidDatabaseDao,
     application: Application) : AndroidViewModel(application) {
 
-    //val asteroids = database.getAsteroidList()
+    val asteroids = database.getAsteroidList()
 
-//    init {
-//        insertSampleAsteroidList()
-//    }
+    init {
+        insertSampleAsteroidList()
+    }
 
     private fun insertSampleAsteroidList() =
         viewModelScope.launch {

@@ -19,7 +19,7 @@ class AsteroidAdapter: RecyclerView.Adapter<TextItemViewHolder>() {
 
     override fun onBindViewHolder(holder: TextItemViewHolder, position: Int) {
         val item = asteroidData[position]
-        holder.textView.text = item.codename
+        holder.bind(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextItemViewHolder {
