@@ -11,31 +11,33 @@ class MainViewModel(
     val database: AsteroidDatabaseDao,
     application: Application) : AndroidViewModel(application) {
 
-    val asteroids = database.getAsteroidList()
+    //val asteroids = database.getAsteroidList()
 
-    init {
-        insertSampleAsteroidList()
-    }
+//    init {
+//        insertSampleAsteroidList()
+//    }
 
-    private fun insertSampleAsteroidList() {
-        val asteroid =
-            (
-            Asteroid(
-                0L, "Theda", "January 2", 2.45,
-                4.3, 5.3, 300.0, true
+    private fun insertSampleAsteroidList() =
+        viewModelScope.launch {
+            listOf(
+                Asteroid(
+                    0L, "Theda", "January 2", 2.45,
+                    4.3, 5.3, 300.0, true
+                ),
+                Asteroid(
+                    1L, "Gabrielle", "June 22", 4.2,
+                    3.4, 5.55, 500.0, false
+                ),
+                Asteroid(
+                    2L, "Jade", "May 20", 45.3, 400.2,
+                    76.1, 1000.0, true
+                )
             )
-//            Asteroid(
-//                1L, "Gabrielle", "June 22", 4.2,
-//                3.4, 5.55, 500.0, false
-//            ),
-//            Asteroid(
-//                2L, "Jade", "May 20", 45.3, 400.2,
-//                76.1, 1000.0, true
-//            )
-        )
-
-    viewModelScope.launch {
-        database.insert(asteroid)
-    }
-    }
+                .apply {
+                    for (asteroid in this) {
+                        database.insert(asteroid)
+                    }
+                }
+        }
 }
+
