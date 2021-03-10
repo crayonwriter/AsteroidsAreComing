@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -18,7 +19,7 @@ class MainViewModel(
     }
 
     private fun insertSampleAsteroidList() =
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             listOf(
                 Asteroid(
                     0L, "Theda", "January 2", 2.45,
@@ -35,9 +36,14 @@ class MainViewModel(
             )
                 .apply {
                     for (asteroid in this) {
-                        database.insert(asteroid)
+                        if (asteroid == null) {
+                            database.insert(asteroid)
+                        } else {
+                            database.update(asteroid)
+                        }
                     }
                 }
         }
 }
+
 

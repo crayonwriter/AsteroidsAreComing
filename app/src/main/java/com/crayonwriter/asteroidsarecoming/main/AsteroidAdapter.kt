@@ -24,7 +24,7 @@ class AsteroidAdapter: RecyclerView.Adapter<TextItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.asteroid_item, parent, false) as TextView
+        val view = layoutInflater.inflate(R.layout.asteroid_item, parent, false)
         return TextItemViewHolder(view)
     }
 
