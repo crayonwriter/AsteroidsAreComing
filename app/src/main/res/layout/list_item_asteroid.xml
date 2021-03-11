@@ -9,7 +9,6 @@
         android:id="@+id/codename_string"
         style="@style/TextStyleCodename"
         android:layout_marginBottom="12dp"
-        android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/date_string"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Codename" />
@@ -17,12 +16,11 @@
     <TextView
         android:id="@+id/date_string"
         style="@style/TextStyleDate"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/potential_danger_image"
+        android:id="@+id/danger_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
