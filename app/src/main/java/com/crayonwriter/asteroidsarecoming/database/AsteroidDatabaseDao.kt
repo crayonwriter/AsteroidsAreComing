@@ -20,6 +20,8 @@ interface AsteroidDatabaseDao {
     @Query("SELECT * from asteroid_table ORDER BY asteroidId DESC")
     fun getAsteroidList(): LiveData<List<Asteroid>>
 
+    @Query("SELECT * from asteroid_table")
+    fun getAsteroidListInstance(): List<Asteroid>
 
 
 }

@@ -35,11 +35,14 @@ class MainViewModel(
                 )
             )
                 .apply {
-                    for (asteroid in this) {
-                        if (asteroid == null) {
-                            database.insert(asteroid)
-                        } else {
-                            database.update(asteroid)
+                    val existingList = database.getAsteroidListInstance()
+                    if (existingList.isEmpty()) {
+                        this.forEach {
+                            database.insert(it)
+                        }
+                    } else {
+                        this.forEach {
+                            database.update(it)
                         }
                     }
                 }
