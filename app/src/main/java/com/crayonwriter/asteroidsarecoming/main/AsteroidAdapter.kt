@@ -11,6 +11,7 @@ import com.crayonwriter.asteroidsarecoming.R
 import com.crayonwriter.asteroidsarecoming.TextItemViewHolder
 import org.w3c.dom.Text
 
+//Todo: Change to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
 //This class will take a list of asteroids and adapt it to something recyclerview can display
 class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
     var asteroidData = listOf<Asteroid>()
@@ -23,6 +24,7 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
     //Todo: extract a function called bind, starting at holder. Exercise 10: Refactor onBindViewHolder.
     //Todo: begin refactoring the ViewHolder in the SleepNightAdapter. By encapsulating the logic in onBindViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+       //Todo: change to val item = getItem(position) after deleting var asteroidData and getItemCount()
         val item = asteroidData[position]
         holder.codename.text = item.codename
         holder.date.text = item.closeApproachDate
@@ -45,5 +47,5 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
         val dangerImage: ImageView = itemView.findViewById(R.id.danger_image)
     }
 
-
+//Todo: create class AsteroidDiffCallback and implement the two methods comparing items and contents
 }
