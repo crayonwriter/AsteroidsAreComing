@@ -20,16 +20,19 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
         }
     override fun getItemCount() = asteroidData.size
 
+    //Todo: extract a function called bind, starting at holder. Exercise 10: Refactor onBindViewHolder.
+    //Todo: begin refactoring the ViewHolder in the SleepNightAdapter. By encapsulating the logic in onBindViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = asteroidData[position]
-        holder.codename.text = item.toString()
-        holder.date.text = item.toString()
+        holder.codename.text = item.codename
+        holder.date.text = item.closeApproachDate
                 holder.dangerImage.setImageResource(when (item.isPotentiallyHazardous) {
-            true -> R.drawable.asteroid_hazardous
-            false -> R.drawable.asteroid_safe
+            true -> R.drawable.ic_status_potentially_hazardous
+            false -> R.drawable.ic_status_normal
     })
     }
 
+    //Todo: Encapsulate the logic in onCreateViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.list_item_asteroid, parent, false)
