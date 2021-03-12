@@ -37,7 +37,7 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val codename: TextView = itemView.findViewById(R.id.codename_text_view)
+        val codename: TextView = itemView.findViewById(R.id.codename_string)
         val date: TextView = itemView.findViewById(R.id.date_string)
         val dangerImage: ImageView = itemView.findViewById(R.id.danger_image)
     }
