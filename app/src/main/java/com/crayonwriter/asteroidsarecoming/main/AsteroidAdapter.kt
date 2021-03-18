@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.R
@@ -55,5 +56,13 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
     }
     }
 
-//Todo: create class AsteroidDiffCallback and implement the two methods comparing items and contents
+//Created class AsteroidDiffCallback and implement the two methods comparing items and contents
+class AsteroidDiffCallback : DiffUtil.ItemCallback<Asteroid>() {
+    override fun areItemsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
+        return oldItem.asteroidId == newItem.asteroidId
+    }
 
+    override fun areContentsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
+        return oldItem == newItem
+    }
+}
