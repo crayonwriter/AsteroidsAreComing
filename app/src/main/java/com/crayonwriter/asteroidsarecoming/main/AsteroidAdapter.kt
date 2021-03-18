@@ -19,22 +19,19 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
         }
     override fun getItemCount() = asteroidData.size
 
-    //Todo: extract a function called bind, starting at holder. Exercise 10: Refactor onBindViewHolder.
-    //Todo: begin refactoring the ViewHolder in the SleepNightAdapter. By encapsulating the logic in onBindViewHolder
+    //Extracted a function called bind. Exercise 10: Refactor onBindViewHolder.
+    //Refactored the ViewHolder in the SleepNightAdapter. By encapsulating the logic in onBindViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       //Todo: change to val item = getItem(position) after deleting var asteroidData and getItemCount()
         val item = asteroidData[position]
         holder.bind(item)
     }
 
-    //Todo: Encapsulate the logic in onCreateViewHolder
+    //Encapsulated the logic in onCreateViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.list_item_asteroid, parent, false)
-        return ViewHolder(view)
+        return ViewHolder.from(parent)
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
         val codename: TextView = itemView.findViewById(R.id.codename_string)
         val date: TextView = itemView.findViewById(R.id.date_string)
         val dangerImage: ImageView = itemView.findViewById(R.id.danger_image)
@@ -47,7 +44,16 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
                 false -> R.drawable.ic_status_normal
             })
         }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = layoutInflater.inflate(R.layout.list_item_asteroid, parent, false)
+                return ViewHolder(view)
+            }
+        }
+    }
     }
 
 //Todo: create class AsteroidDiffCallback and implement the two methods comparing items and contents
-}
+
