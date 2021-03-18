@@ -42,8 +42,8 @@ class MainFragment : Fragment() {
 
         mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
             it?.let {
-                //todo: change below to adapter.submitList(it) after updating the adapter
-                adapter.asteroidData = it
+                //This uses diffUtil
+                adapter.submitList(it)
             }
         })
 
