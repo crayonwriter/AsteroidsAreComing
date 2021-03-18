@@ -4,26 +4,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.R
 
-//Todo: Change to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
+//Changed to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
 //This class will take a list of asteroids and adapt it to something recyclerview can display
-class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
-    var asteroidData = listOf<Asteroid>()
-        set(value) {
-         field = value
-         notifyDataSetChanged()
-        }
-    override fun getItemCount() = asteroidData.size
+class AsteroidAdapter: androidx.recyclerview.widget.ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(AsteroidDiffCallback()) {
 
     //Extracted a function called bind. Exercise 10: Refactor onBindViewHolder.
     //Refactored the ViewHolder in the SleepNightAdapter. By encapsulating the logic in onBindViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = asteroidData[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
