@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.R
-import com.crayonwriter.asteroidsarecoming.TextItemViewHolder
-import org.w3c.dom.Text
 
 //Todo: Change to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
 //This class will take a list of asteroids and adapt it to something recyclerview can display
@@ -26,12 +24,7 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        //Todo: change to val item = getItem(position) after deleting var asteroidData and getItemCount()
         val item = asteroidData[position]
-        holder.codename.text = item.codename
-        holder.date.text = item.closeApproachDate
-                holder.dangerImage.setImageResource(when (item.isPotentiallyHazardous) {
-            true -> R.drawable.ic_status_potentially_hazardous
-            false -> R.drawable.ic_status_normal
-    })
+        holder.bind(item)
     }
 
     //Todo: Encapsulate the logic in onCreateViewHolder
@@ -45,6 +38,15 @@ class AsteroidAdapter: RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
         val codename: TextView = itemView.findViewById(R.id.codename_string)
         val date: TextView = itemView.findViewById(R.id.date_string)
         val dangerImage: ImageView = itemView.findViewById(R.id.danger_image)
+
+        fun bind(item: Asteroid) {
+            codename.text = item.codename
+            date.text = item.closeApproachDate
+            dangerImage.setImageResource(when (item.isPotentiallyHazardous) {
+                true -> R.drawable.ic_status_potentially_hazardous
+                false -> R.drawable.ic_status_normal
+            })
+        }
     }
 
 //Todo: create class AsteroidDiffCallback and implement the two methods comparing items and contents
