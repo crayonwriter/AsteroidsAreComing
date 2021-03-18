@@ -1,15 +1,12 @@
 package com.crayonwriter.asteroidsarecoming.main
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ListAdapter
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.R
+import com.crayonwriter.asteroidsarecoming.databinding.ListItemAsteroidBinding
 
 //Changed to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
 //This class will take a list of asteroids and adapt it to something recyclerview can display
@@ -27,15 +24,12 @@ class AsteroidAdapter: androidx.recyclerview.widget.ListAdapter<Asteroid, Astero
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val codename: TextView = itemView.findViewById(R.id.codename_string)
-        val date: TextView = itemView.findViewById(R.id.date_string)
-        val dangerImage: ImageView = itemView.findViewById(R.id.danger_image)
+    class ViewHolder private constructor(val binding: ListItemAsteroidBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Asteroid) {
-            codename.text = item.codename
-            date.text = item.closeApproachDate
-            dangerImage.setImageResource(when (item.isPotentiallyHazardous) {
+            binding.codenameString.text = item.codename
+            binding.dateString.text = item.closeApproachDate
+            binding.dangerImage.setImageResource(when (item.isPotentiallyHazardous) {
                 true -> R.drawable.ic_status_potentially_hazardous
                 false -> R.drawable.ic_status_normal
             })
@@ -44,8 +38,10 @@ class AsteroidAdapter: androidx.recyclerview.widget.ListAdapter<Asteroid, Astero
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.list_item_asteroid, parent, false)
-                return ViewHolder(view)
+                //Use binding object to inflate the layout. Replace layoutInflater with ListItemAsteroidBinding
+                val binding = ListItemAsteroidBinding.inflate(layoutInflater, parent, false)
+                //Pass the binding to the ViewHolder constructor, and change its type
+                return ViewHolder(binding)
             }
         }
     }
