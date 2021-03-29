@@ -21,14 +21,27 @@ fun TextView.setCodenameString(item: Asteroid?) {
     }
 }
 
+
 @BindingAdapter("statusIcon")
-fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
-    } else {
-        imageView.setImageResource(R.drawable.ic_status_normal)
+fun ImageView.setStatusImage(item: Asteroid?) {
+    item?.let {
+        setImageResource(when (item.isPotentiallyHazardous)
+        {
+            true -> R.drawable.ic_status_potentially_hazardous
+            false -> R.drawable.ic_status_normal
+        })
     }
 }
+
+
+//@BindingAdapter("statusIcon")
+//fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
+//    if (isHazardous) {
+//        imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
+//    } else {
+//        imageView.setImageResource(R.drawable.ic_status_normal)
+//    }
+//}
 
 @BindingAdapter("asteroidStatusImage")
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
