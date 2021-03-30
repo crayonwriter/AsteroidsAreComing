@@ -56,6 +56,10 @@ class MainViewModel(
     fun onAsteroidClicked(id: Long) {
         _navigateToDetail.value = id
     }
+
+    fun onNavigateToDetailCompleted() {
+        _navigateToDetail.value = null
+    }
 }
 
 
