@@ -7,12 +7,18 @@
         <variable
             name="asteroid"
             type="com.crayonwriter.asteroidsarecoming.Asteroid" />
+<!-- Reference to clickListener so we can call it from databinding-->
+        <variable
+            name="clickListener"
+            type="com.crayonwriter.asteroidsarecoming.main.AsteroidListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#667A50">
+        android:background="#667A50"
+        android:onClick="@{() -> clickListener.onClick(asteroid)"
+        >
 
         <TextView
             android:id="@+id/codename_string"
