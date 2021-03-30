@@ -12,8 +12,10 @@ import com.crayonwriter.asteroidsarecoming.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
-       override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = FragmentMainBinding.inflate(inflater)
 
         setHasOptionsMenu(true)
@@ -30,7 +32,8 @@ class MainFragment : Fragment() {
         //Now that we have a factory, we can ask the viewmodelfactory provider for a mainViewModel
         val mainViewModel =
             ViewModelProvider(
-                this, viewModelFactory).get(MainViewModel::class.java)
+                this, viewModelFactory
+            ).get(MainViewModel::class.java)
 
         //Setup databinding, including setting the variable in the layout
         // which we access through the binding object to the viewModel
@@ -38,10 +41,12 @@ class MainFragment : Fragment() {
 
         //Connect the adapter to the recyclerview. Make a new adapter and assign the adapter
         //on the recyclerview. Tells the recyclerview to use the adapter to display things on the screen.
-        val adapter = AsteroidAdapter(AsteroidListener { 
+        val adapter = AsteroidAdapter(AsteroidListener {
             //Callback that displays the ID of the asteroid clicked as a toast
-                asteroidId ->  Toast.makeText(context, "${asteroidId}", Toast.LENGTH_LONG).show()
+                asteroidId ->
+            Toast.makeText(context, "${asteroidId}", Toast.LENGTH_LONG).show()
         })
+
         binding.asteroidRecycler.adapter = adapter
 
         mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
