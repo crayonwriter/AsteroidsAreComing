@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crayonwriter.asteroidsarecoming.Asteroid
-import com.crayonwriter.asteroidsarecoming.R
 import com.crayonwriter.asteroidsarecoming.databinding.ListItemAsteroidBinding
 
 //Changed to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
@@ -14,9 +13,9 @@ class AsteroidAdapter(val clickListener: AsteroidListener): androidx.recyclervie
 
     //Extracted a function called bind. Exercise 10: Refactor onBindViewHolder.
     //Refactored the ViewHolder in the SleepNightAdapter. By encapsulating the logic in onBindViewHolder
+    //Wire clickListener to the databinding
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
+        holder.bind(getItem(position)!!, clickListener)
     }
 
     //Encapsulated the logic in onCreateViewHolder
@@ -26,8 +25,9 @@ class AsteroidAdapter(val clickListener: AsteroidListener): androidx.recyclervie
 
     class ViewHolder private constructor(val binding: ListItemAsteroidBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Asteroid) {
+        fun bind(item: Asteroid, clickListener: AsteroidListener) {
             binding.asteroid = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
 //            binding.codenameString.text = item.codename
 //            binding.dateString.text = item.closeApproachDate
