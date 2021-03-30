@@ -2,6 +2,7 @@ package com.crayonwriter.asteroidsarecoming.main
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -37,7 +38,10 @@ class MainFragment : Fragment() {
 
         //Connect the adapter to the recyclerview. Make a new adapter and assign the adapter
         //on the recyclerview. Tells the recyclerview to use the adapter to display things on the screen.
-        val adapter = AsteroidAdapter()
+        val adapter = AsteroidAdapter(AsteroidListener { 
+            //Callback that displays the ID of the asteroid clicked as a toast
+                asteroidId ->  Toast.makeText(context, "${asteroidId}", Toast.LENGTH_LONG).show()
+        })
         binding.asteroidRecycler.adapter = adapter
 
         mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
