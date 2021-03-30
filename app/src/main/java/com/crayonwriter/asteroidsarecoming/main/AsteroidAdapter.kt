@@ -10,7 +10,7 @@ import com.crayonwriter.asteroidsarecoming.databinding.ListItemAsteroidBinding
 
 //Changed to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
 //This class will take a list of asteroids and adapt it to something recyclerview can display
-class AsteroidAdapter: androidx.recyclerview.widget.ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(AsteroidDiffCallback()) {
+class AsteroidAdapter(val clickListener: AsteroidListener): androidx.recyclerview.widget.ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(AsteroidDiffCallback()) {
 
     //Extracted a function called bind. Exercise 10: Refactor onBindViewHolder.
     //Refactored the ViewHolder in the SleepNightAdapter. By encapsulating the logic in onBindViewHolder
