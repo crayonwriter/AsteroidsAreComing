@@ -42,9 +42,8 @@ class MainFragment : Fragment() {
         //Connect the adapter to the recyclerview. Make a new adapter and assign the adapter
         //on the recyclerview. Tells the recyclerview to use the adapter to display things on the screen.
         val adapter = AsteroidAdapter(AsteroidListener {
-            //Callback that displays the ID of the asteroid clicked as a toast
-                asteroidId ->
-            Toast.makeText(context, "${asteroidId}", Toast.LENGTH_LONG).show()
+            //Pass the call to click via the viewmodel
+                asteroidId -> mainViewModel.onAsteroidClicked(asteroidId)
         })
 
         binding.asteroidRecycler.adapter = adapter
