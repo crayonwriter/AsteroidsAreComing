@@ -49,12 +49,12 @@ class MainViewModel(
                 }
         }
 
-    private val _navigateToDetail = MutableLiveData<Long>()
+    private val _navigateToDetail = MutableLiveData<Asteroid>()
     val navigateToDetail
     get() = _navigateToDetail
 
-    fun onAsteroidClicked(id: Long) {
-        _navigateToDetail.value = id
+    fun onAsteroidClicked(asteroid: Asteroid) {
+        _navigateToDetail.value = asteroid
     }
 
     fun onNavigateToDetailCompleted() {
