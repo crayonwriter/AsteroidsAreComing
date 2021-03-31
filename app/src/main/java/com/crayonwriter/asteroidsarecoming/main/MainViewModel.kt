@@ -2,6 +2,7 @@ package com.crayonwriter.asteroidsarecoming.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
@@ -47,6 +48,18 @@ class MainViewModel(
                     }
                 }
         }
+
+    private val _navigateToDetail = MutableLiveData<Asteroid>()
+    val navigateToDetail
+    get() = _navigateToDetail
+
+    fun onAsteroidClicked(asteroid: Asteroid) {
+        _navigateToDetail.value = asteroid
+    }
+
+    fun onNavigateToDetailCompleted() {
+        _navigateToDetail.value = null
+    }
 }
 
 

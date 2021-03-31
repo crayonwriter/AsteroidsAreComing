@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.R
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabase
 import com.crayonwriter.asteroidsarecoming.databinding.FragmentMainBinding
@@ -42,12 +44,22 @@ class MainFragment : Fragment() {
         //Connect the adapter to the recyclerview. Make a new adapter and assign the adapter
         //on the recyclerview. Tells the recyclerview to use the adapter to display things on the screen.
         val adapter = AsteroidAdapter(AsteroidListener {
-            //Callback that displays the ID of the asteroid clicked as a toast
-                asteroidId ->
-            Toast.makeText(context, "${asteroidId}", Toast.LENGTH_LONG).show()
+            //Pass the call to click via the viewmodel
+                asteroid -> mainViewModel.onAsteroidClicked(asteroid)
         })
 
         binding.asteroidRecycler.adapter = adapter
+
+        //Observe livedata for the navigation to the detail screen
+        mainViewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {asteroid ->
+            asteroid?.let {
+                this.findNavController().navigate(
+                    MainFragmentDirections.actionShowDetail(asteroid)
+                )
+                mainViewModel.onNavigateToDetailCompleted()
+            }
+        })
+
 
         mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
             it?.let {
