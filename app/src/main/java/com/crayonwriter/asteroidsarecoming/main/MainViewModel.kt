@@ -2,6 +2,7 @@ package com.crayonwriter.asteroidsarecoming.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.crayonwriter.asteroidsarecoming.Asteroid
@@ -15,9 +16,20 @@ class MainViewModel(
 
     val asteroids = database.getAsteroidList()
 
+//    private val _asteroidNetworkData = MutableLiveData<String>()
+//
+//    val asteroidNetworkData: LiveData<String>
+//    get() = _asteroidNetworkData
+
     init {
+//        getAsteroidNetworkData()
         insertSampleAsteroidList()
+
     }
+
+//    private fun getAsteroidNetworkData() {
+//        _asteroidNetworkData.value = "Retrieved asteroid data goes here!"
+//    }
 
     private fun insertSampleAsteroidList() =
         viewModelScope.launch(Dispatchers.IO) {
