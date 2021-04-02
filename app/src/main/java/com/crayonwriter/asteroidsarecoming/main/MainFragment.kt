@@ -2,12 +2,10 @@ package com.crayonwriter.asteroidsarecoming.main
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.crayonwriter.asteroidsarecoming.Asteroid
 import com.crayonwriter.asteroidsarecoming.R
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabase
 import com.crayonwriter.asteroidsarecoming.databinding.FragmentMainBinding

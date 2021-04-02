@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.crayonwriter.asteroidsarecoming.Asteroid
 
 //Database class: one entity from the one table, version #,
 //and not a complex database so no need for exportSchema to be true

@@ -2,10 +2,9 @@ package com.crayonwriter.asteroidsarecoming.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.crayonwriter.asteroidsarecoming.Asteroid
+import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

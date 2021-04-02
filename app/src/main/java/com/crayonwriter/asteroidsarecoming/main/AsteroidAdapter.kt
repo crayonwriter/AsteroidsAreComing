@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.crayonwriter.asteroidsarecoming.Asteroid
+import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.databinding.ListItemAsteroidBinding
 
 //Changed to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil

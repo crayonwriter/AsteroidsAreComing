@@ -3,7 +3,7 @@ package com.crayonwriter.asteroidsarecoming
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import org.w3c.dom.Text
+import com.crayonwriter.asteroidsarecoming.database.Asteroid
 
 //Create BindingAdapter for the date and the name
 

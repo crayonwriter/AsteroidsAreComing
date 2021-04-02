@@ -6,7 +6,7 @@
     <data>
         <variable
             name="asteroid"
-            type="com.crayonwriter.asteroidsarecoming.Asteroid" />
+            type="com.crayonwriter.asteroidsarecoming.database.Asteroid" />
 <!-- Reference to clickListener so we can call it from databinding-->
         <variable
             name="clickListener"

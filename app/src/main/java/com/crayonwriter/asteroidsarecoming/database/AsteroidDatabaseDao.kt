@@ -2,7 +2,6 @@ package com.crayonwriter.asteroidsarecoming.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.crayonwriter.asteroidsarecoming.Asteroid
 
 
 @Dao

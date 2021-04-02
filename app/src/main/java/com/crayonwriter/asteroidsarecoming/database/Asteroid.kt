@@ -1,4 +1,4 @@
-package com.crayonwriter.asteroidsarecoming
+package com.crayonwriter.asteroidsarecoming.database
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
