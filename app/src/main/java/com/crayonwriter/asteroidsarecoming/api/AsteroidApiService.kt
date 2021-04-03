@@ -20,6 +20,7 @@ interface AsteroidApiService {
             Call<String>
 }
 
+//Later, just call AsteroidApi.retrofitService will return a retrofit object that implements AsteroidApiService
 object AsteroidApi {
     val retrofitService: AsteroidApiService by lazy {
         retrofit.create(AsteroidApiService::class.java)

@@ -5,10 +5,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.crayonwriter.asteroidsarecoming.api.AsteroidApi
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainViewModel(
     val database: AsteroidDatabaseDao,
@@ -28,6 +32,17 @@ class MainViewModel(
     }
 
     private fun getAsteroidNetworkData() {
+        AsteroidApi.retrofitService.getProperties().enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                _asteroidNetworkData.value = response.body()
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                _asteroidNetworkData.value = "Failure: " + t.message
+            }
+        }
+
+        )
         _asteroidNetworkData.value = "Retrieved asteroid data goes here!"
     }
 
