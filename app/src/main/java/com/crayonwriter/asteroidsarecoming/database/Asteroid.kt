@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
+//Domain object
 //Annotate this class to make it a table for DAO and give it a new name
 
 @Parcelize
