@@ -10,7 +10,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 
-//Annotate this class to make it a table for DAO and give it a new name
 @Entity(tableName = "asteroid_table")
 data class Asteroid(
     //Annotate each column and give each a custom name, except for the PrimaryKey
@@ -22,3 +21,4 @@ data class Asteroid(
     @ColumnInfo(name = "relative_velocity") val relativeVelocity: Double,
     @ColumnInfo(name = "distance_from_earth") val distanceFromEarth: Double,
     @ColumnInfo(name = "is_potentially_hazardous") val isPotentiallyHazardous: Boolean) : Parcelable
+
