@@ -29,13 +29,7 @@ class AsteroidAdapter(val clickListener: AsteroidListener): androidx.recyclervie
             binding.asteroid = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
-//            binding.codenameString.text = item.codename
-//            binding.dateString.text = item.closeApproachDate
-//            binding.dangerImage.setImageResource(when (item.isPotentiallyHazardous) {
-//                true -> R.drawable.ic_status_potentially_hazardous
-//                false -> R.drawable.ic_status_normal
-//            })
-        }
+  }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
