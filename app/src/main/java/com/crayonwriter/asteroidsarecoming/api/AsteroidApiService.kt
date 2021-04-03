@@ -1,5 +1,6 @@
 package com.crayonwriter.asteroidsarecoming.api
 
+import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -17,7 +18,7 @@ private val retrofit = Retrofit.Builder()
 interface AsteroidApiService {
     @GET("start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY")
     fun getProperties():
-            Call<String>
+            Call<List<Asteroid>>
 }
 
 //Later, just call AsteroidApi.retrofitService will return a retrofit object that implements AsteroidApiService

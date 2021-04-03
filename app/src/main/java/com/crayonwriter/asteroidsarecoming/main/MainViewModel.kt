@@ -32,18 +32,18 @@ class MainViewModel(
     }
 
     private fun getAsteroidNetworkData() {
-        AsteroidApi.retrofitService.getProperties().enqueue(object: Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _asteroidNetworkData.value = response.body()
+        AsteroidApi.retrofitService.getProperties().enqueue(object: Callback<List<Asteroid>> {
+            override fun onResponse(call: Call<List<Asteroid>>, response: Response<List<Asteroid>>) {
+                _asteroidNetworkData.value = "Success"
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _asteroidNetworkData.value = "Failure: " + t.message
+            override fun onFailure(call: Call<List<Asteroid>>, t: Throwable) {
+                _asteroidNetworkData.value = t.message
             }
         }
 
         )
-        _asteroidNetworkData.value = "Retrieved asteroid data goes here!"
+        _asteroidNetworkData.value = null
     }
 
 //    private fun insertSampleAsteroidList() =
