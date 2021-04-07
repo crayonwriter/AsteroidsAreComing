@@ -8,7 +8,7 @@ import retrofit2.http.GET
 
 //This is the network layer. It is the api that the viewmodel will use to communicate with a web service.
 
-private const val BASE_URL = "https://api.nasa.gov/neo/rest/v1/feed?"
+private const val BASE_URL = "https://api.nasa.gov/"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(ScalarsConverterFactory.create())

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.crayonwriter.asteroidsarecoming.api.AsteroidApi
+import com.crayonwriter.asteroidsarecoming.api.parseAsteroidsJsonResult
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ class MainViewModel(
     application: Application) : AndroidViewModel(application) {
 
     val asteroids = database.getAsteroidList()
+
 
     private val _asteroidNetworkData = MutableLiveData<String>()
 
@@ -34,7 +36,7 @@ class MainViewModel(
     private fun getAsteroidNetworkData() {
         AsteroidApi.retrofitService.getProperties().enqueue(object: Callback<List<Asteroid>> {
             override fun onResponse(call: Call<List<Asteroid>>, response: Response<List<Asteroid>>) {
-                _asteroidNetworkData.value = "Success"
+                insertDataFromNetwork()
             }
 
             override fun onFailure(call: Call<List<Asteroid>>, t: Throwable) {
@@ -76,6 +78,27 @@ class MainViewModel(
 //                }
 //        }
 
+    private fun insertDataFromNetwork() {
+        viewModelScope.launch(Dispatchers.IO) {
+            listOf(
+                asteroids
+            )
+                .apply {
+                    val existingList = database.getAsteroidListInstance()
+                    if (existingList.isEmpty()) {
+                        this.forEach {
+                            database.insert(Asteroid)
+                        }
+                    } else {
+                        this.forEach {
+                            database.update(Asteroid)
+                        }
+                    }
+                }
+
+        }
+    }
+
     private val _navigateToDetail = MutableLiveData<Asteroid>()
     val navigateToDetail
     get() = _navigateToDetail
@@ -87,6 +110,7 @@ class MainViewModel(
     fun onNavigateToDetailCompleted() {
         _navigateToDetail.value = null
     }
+}
 }
 
 
