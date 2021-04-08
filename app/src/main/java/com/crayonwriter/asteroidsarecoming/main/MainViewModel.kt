@@ -25,28 +25,34 @@ class MainViewModel(
     private val _asteroidNetworkData = MutableLiveData<String>()
 
     val asteroidNetworkData: LiveData<String>
-    get() = _asteroidNetworkData
+        get() = _asteroidNetworkData
 
     init {
-     getAsteroidNetworkData()
+        getAsteroidNetworkData()
         //insertSampleAsteroidList()
 
     }
 
     private fun getAsteroidNetworkData() {
-        AsteroidApi.retrofitService.getProperties().enqueue(object: Callback<List<Asteroid>> {
-            override fun onResponse(call: Call<List<Asteroid>>, response: Response<List<Asteroid>>) {
-                insertDataFromNetwork()
-            }
-
-            override fun onFailure(call: Call<List<Asteroid>>, t: Throwable) {
-                _asteroidNetworkData.value = t.message
-            }
-        }
-
-        )
-        _asteroidNetworkData.value = null
+        _asteroidNetworkData.value = "Set the data here"
     }
+//    private fun getAsteroidNetworkData() {
+//        AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<List<Asteroid>> {
+//            override fun onResponse(
+//                call: Call<List<Asteroid>>,
+//                response: Response<List<Asteroid>>
+//            ) {
+//                insertDataFromNetwork()
+//            }
+//
+//            override fun onFailure(call: Call<List<Asteroid>>, t: Throwable) {
+//                _asteroidNetworkData.value = t.message
+//            }
+//        }
+//
+//        )
+//        _asteroidNetworkData.value = null
+//    }
 
 //    private fun insertSampleAsteroidList() =
 //        viewModelScope.launch(Dispatchers.IO) {
@@ -78,30 +84,24 @@ class MainViewModel(
 //                }
 //        }
 
-    private fun insertDataFromNetwork() {
-        viewModelScope.launch(Dispatchers.IO) {
-            listOf(
-                asteroids
-            )
-                .apply {
-                    val existingList = database.getAsteroidListInstance()
-                    if (existingList.isEmpty()) {
-                        this.forEach {
-                            database.insert(Asteroid)
-                        }
-                    } else {
-                        this.forEach {
-                            database.update(Asteroid)
-                        }
-                    }
-                }
-
-        }
-    }
+//    private fun insertDataFromNetwork() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            apply {
+//                    val existingList = database.getAsteroidListInstance()
+//                    if (existingList.isEmpty()) {
+//                            database.insert(Asteroid)
+//                        } else {
+//                            database.update(Asteroid)
+//                        }
+//                    }
+//                }
+//
+//        }
+//    }
 
     private val _navigateToDetail = MutableLiveData<Asteroid>()
     val navigateToDetail
-    get() = _navigateToDetail
+        get() = _navigateToDetail
 
     fun onAsteroidClicked(asteroid: Asteroid) {
         _navigateToDetail.value = asteroid
@@ -111,6 +111,7 @@ class MainViewModel(
         _navigateToDetail.value = null
     }
 }
-}
+
+
 
 

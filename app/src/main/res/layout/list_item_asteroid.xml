@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="viewModel"
+            type="com.crayonwriter.asteroidsarecoming.main.MainViewModel" />
+        <variable
             name="asteroid"
             type="com.crayonwriter.asteroidsarecoming.database.Asteroid" />
 <!-- Reference to clickListener so we can call it from databinding-->
@@ -16,36 +19,52 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#667A50"
-        android:onClick="@{() -> clickListener.onClick(asteroid)}"
-        >
+        android:background="#667A50">
 
         <TextView
             android:id="@+id/codename_string"
             style="@style/TextStyleCodename"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/date_string"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Codename"
-            app:codenameString="@{asteroid}"/>
-
-        <TextView
-            android:id="@+id/date_string"
-            style="@style/TextStyleDate"
-            android:textColor="#330F0F"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:closeApproachDateString="@{asteroid}"/>
-
-        <ImageView
-            android:id="@+id/danger_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/date_string"
+            android:text="@{viewModel.asteroidNetworkData}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/codename_string"
-            app:srcCompat="@drawable/ic_status_normal"
-            app:statusIcon="@{asteroid}"/>
+            app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Codename" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="#667A50"-->
+<!--        android:onClick="@{() -> clickListener.onClick(asteroid)}"-->
+<!--        >-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/codename_string"-->
+<!--            style="@style/TextStyleCodename"-->
+<!--            android:layout_marginBottom="12dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/date_string"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            tools:text="Codename"-->
+<!--            app:codenameString="@{asteroid}"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/date_string"-->
+<!--            style="@style/TextStyleDate"-->
+<!--            android:textColor="#330F0F"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:closeApproachDateString="@{asteroid}"/>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/danger_image"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="30dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/date_string"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/codename_string"-->
+<!--            app:srcCompat="@drawable/ic_status_normal"-->
+<!--            app:statusIcon="@{asteroid}"/>-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>
