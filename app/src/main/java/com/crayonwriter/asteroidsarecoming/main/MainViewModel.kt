@@ -22,37 +22,28 @@ class MainViewModel(
     val asteroids = database.getAsteroidList()
 
 
-    private val _asteroidNetworkData = MutableLiveData<String>()
+    private val _asteroidNetworkResponse = MutableLiveData<String>()
 
     val asteroidNetworkData: LiveData<String>
-        get() = _asteroidNetworkData
+        get() = _asteroidNetworkResponse
 
     init {
-        getAsteroidNetworkData()
+        getAsteroidNetworkResponse()
         //insertSampleAsteroidList()
 
     }
 
-    private fun getAsteroidNetworkData() {
-        _asteroidNetworkData.value = "Set the data here"
+    private fun getAsteroidNetworkResponse() {
+        AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                _asteroidNetworkResponse.value = response.body()            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                _asteroidNetworkResponse.value = "Failure " + t.message            }
+
+        })
+        _asteroidNetworkResponse.value = "Response here."
     }
-//    private fun getAsteroidNetworkData() {
-//        AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<List<Asteroid>> {
-//            override fun onResponse(
-//                call: Call<List<Asteroid>>,
-//                response: Response<List<Asteroid>>
-//            ) {
-//                insertDataFromNetwork()
-//            }
-//
-//            override fun onFailure(call: Call<List<Asteroid>>, t: Throwable) {
-//                _asteroidNetworkData.value = t.message
-//            }
-//        }
-//
-//        )
-//        _asteroidNetworkData.value = null
-//    }
 
 //    private fun insertSampleAsteroidList() =
 //        viewModelScope.launch(Dispatchers.IO) {
