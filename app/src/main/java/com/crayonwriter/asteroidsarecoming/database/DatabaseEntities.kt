@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 //Create the DatabaseEntities class, adding annotations for the class and the primary key.
 //Create the DatabaseAsteroid database object. Create a Room @Entity called DatabaseAndroid
 
-@Entity
+@Entity(tableName = "asteroidList_table")
 data class DatabaseAsteroid constructor(
     @PrimaryKey
     val asteroidId: Long,

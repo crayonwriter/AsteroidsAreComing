@@ -22,5 +22,9 @@ interface AsteroidDatabaseDao {
     @Query("SELECT * from asteroid_table")
     fun getAsteroidListInstance(): List<Asteroid>
 
+    @Insert
+    fun insertList(asteroidList: List<Asteroid>)
+
+
 
 }
