@@ -31,7 +31,7 @@ class MainViewModel(
 
     init {
         getAsteroidNetworkResponse()
-        insertDataFromNetwork()
+//        insertDataFromNetwork()
         //insertSampleAsteroidList()
 
     }
@@ -41,7 +41,8 @@ class MainViewModel(
             override fun onResponse(call: Call<String>, response: Response<String>) {
 
             if (response.body() != null) {
-                parseAsteroidsJsonResult(JSONObject())
+               val asteroids =  parseAsteroidsJsonResult(JSONObject(response.body()))
+                suspend {database.insert(asteroids)  }
             } else {
                 _asteroidNetworkResponse.value = response.body()
             }
@@ -85,20 +86,20 @@ class MainViewModel(
 //                }
 //        }
 
-    private fun insertDataFromNetwork() {
-        viewModelScope.launch(Dispatchers.IO) {
-            apply {
-                    val existingList = database.getAsteroidListInstance()
-                    if (existingList.isEmpty()) {
-                            database.insertList(asteroidList)
-                        } else {
-                            database.update(asteroid = Asteroid)
-                        }
-                    }
-                }
-
-        }
-    }
+//    private fun insertDataFromNetwork() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            apply {
+//                    val existingList = database.getAsteroidListInstance()
+//                    if (existingList.isEmpty()) {
+//                            database.insertList(asteroidList)
+//                        } else {
+//                            database.update(asteroid = Asteroid)
+//                        }
+//                    }
+//                }
+//
+//        }
+//    }
 
     private val _navigateToDetail = MutableLiveData<Asteroid>()
     val navigateToDetail
