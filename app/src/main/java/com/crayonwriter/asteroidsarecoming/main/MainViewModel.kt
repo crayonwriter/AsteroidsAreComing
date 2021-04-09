@@ -11,6 +11,7 @@ import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +25,7 @@ class MainViewModel(
 
     private val _asteroidNetworkResponse = MutableLiveData<String>()
 
-    val asteroidNetworkData: LiveData<String>
+    val asteroidNetworkResponse: LiveData<String>
         get() = _asteroidNetworkResponse
 
     init {
@@ -36,7 +37,13 @@ class MainViewModel(
     private fun getAsteroidNetworkResponse() {
         AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                _asteroidNetworkResponse.value = response.body()            }
+
+            if (response.body() != null) {
+                parseAsteroidsJsonResult(JSONObject())
+            } else {
+                _asteroidNetworkResponse.value = response.body()
+            }
+            }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 _asteroidNetworkResponse.value = "Failure " + t.message            }

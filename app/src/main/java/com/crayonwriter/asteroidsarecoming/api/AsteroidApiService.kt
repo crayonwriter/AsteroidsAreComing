@@ -16,7 +16,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface AsteroidApiService {
-    @GET("neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY")
+    @GET("neo/rest/v1/feed?start_date=today&api_key=DEMO_KEY")
     fun getProperties():
             Call<String>
 }
