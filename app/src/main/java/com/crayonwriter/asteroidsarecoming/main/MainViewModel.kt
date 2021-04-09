@@ -9,6 +9,7 @@ import com.crayonwriter.asteroidsarecoming.api.AsteroidApi
 import com.crayonwriter.asteroidsarecoming.api.parseAsteroidsJsonResult
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
+import com.crayonwriter.asteroidsarecoming.database.DatabaseAsteroid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -30,6 +31,7 @@ class MainViewModel(
 
     init {
         getAsteroidNetworkResponse()
+        insertDataFromNetwork()
         //insertSampleAsteroidList()
 
     }
@@ -51,6 +53,7 @@ class MainViewModel(
         })
         _asteroidNetworkResponse.value = "Response here."
     }
+
 
 //    private fun insertSampleAsteroidList() =
 //        viewModelScope.launch(Dispatchers.IO) {
@@ -82,20 +85,20 @@ class MainViewModel(
 //                }
 //        }
 
-//    private fun insertDataFromNetwork() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            apply {
-//                    val existingList = database.getAsteroidListInstance()
-//                    if (existingList.isEmpty()) {
-//                            database.insert(Asteroid)
-//                        } else {
-//                            database.update(Asteroid)
-//                        }
-//                    }
-//                }
-//
-//        }
-//    }
+    private fun insertDataFromNetwork() {
+        viewModelScope.launch(Dispatchers.IO) {
+            apply {
+                    val existingList = database.getAsteroidListInstance()
+                    if (existingList.isEmpty()) {
+                            database.insertList(asteroidList)
+                        } else {
+                            database.update(asteroid = Asteroid)
+                        }
+                    }
+                }
+
+        }
+    }
 
     private val _navigateToDetail = MutableLiveData<Asteroid>()
     val navigateToDetail
