@@ -29,6 +29,7 @@ class MainViewModel(
     val asteroidNetworkResponse: LiveData<String>
         get() = _asteroidNetworkResponse
 
+    val _property = MutableLiveData<>
     init {
         getAsteroidNetworkResponse()
 //        insertDataFromNetwork()
