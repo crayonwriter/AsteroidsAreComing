@@ -23,18 +23,15 @@ class MainViewModel(
 
     val asteroids = database.getAsteroidList()
 
-
     private val _asteroidNetworkResponse = MutableLiveData<String>()
 
     val asteroidNetworkResponse: LiveData<String>
         get() = _asteroidNetworkResponse
 
-    val _property = MutableLiveData<>
     init {
         getAsteroidNetworkResponse()
 //        insertDataFromNetwork()
         //insertSampleAsteroidList()
-
     }
 
     private fun getAsteroidNetworkResponse() {
