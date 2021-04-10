@@ -42,3 +42,9 @@ object AsteroidApi {
     }
 }
 
+object PictureOfDayApi {
+    val retrofitService: PictureOfDayApiService by lazy {
+        retrofit.create(PictureOfDayApiService::class.java)
+    }
+}
+

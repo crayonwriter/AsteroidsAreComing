@@ -1,4 +1,4 @@
-package com.crayonwriter.asteroidsarecoming
+package com.crayonwriter.asteroidsarecoming.picture
 
 
 import com.squareup.moshi.Json

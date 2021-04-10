@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.crayonwriter.asteroidsarecoming.api.AsteroidApi
+import com.crayonwriter.asteroidsarecoming.api.PictureOfDayApi
+import com.crayonwriter.asteroidsarecoming.api.PictureOfDayApiService
 import com.crayonwriter.asteroidsarecoming.api.parseAsteroidsJsonResult
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
@@ -23,11 +25,20 @@ class MainViewModel(
 
     val asteroids = database.getAsteroidList()
 
+
+    //MutableLiveData and LiveData for the asteroid data
     private val _asteroidNetworkResponse = MutableLiveData<String>()
 
     val asteroidNetworkResponse: LiveData<String>
         get() = _asteroidNetworkResponse
 
+    //MutableLiveData and LiveData for the Image of the day
+    private val _picOfDayResponse = MutableLiveData<String>()
+
+    val picOfDayResponse: LiveData<String>
+        get() = _picOfDayResponse
+
+    //Init block
     init {
         getAsteroidNetworkResponse()
 //        insertDataFromNetwork()
@@ -51,7 +62,19 @@ class MainViewModel(
                 _asteroidNetworkResponse.value = "Failure " + t.message            }
 
         })
+
+        PictureOfDayApi.retrofitService.getPictureOfDay().enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                _picOfDayResponse.value = response.body()
+                }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                _picOfDayResponse.value = "Failure " + t.message
+            }
+        })
     }
+
+
 
 
 //    private fun insertSampleAsteroidList() =
