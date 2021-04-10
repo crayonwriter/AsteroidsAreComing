@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.crayonwriter.asteroidsarecoming.Asteroid
+import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.databinding.ListItemAsteroidBinding
 
 //Changed to listAdapter instead. Lesson 2, exercise 13 Refresh Data with DiffUtil
@@ -29,13 +29,7 @@ class AsteroidAdapter(val clickListener: AsteroidListener): androidx.recyclervie
             binding.asteroid = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
-//            binding.codenameString.text = item.codename
-//            binding.dateString.text = item.closeApproachDate
-//            binding.dangerImage.setImageResource(when (item.isPotentiallyHazardous) {
-//                true -> R.drawable.ic_status_potentially_hazardous
-//                false -> R.drawable.ic_status_normal
-//            })
-        }
+  }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {

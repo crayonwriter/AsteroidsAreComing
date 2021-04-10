@@ -5,13 +5,17 @@
 
     <data>
         <variable
+            name="viewModel"
+            type="com.crayonwriter.asteroidsarecoming.main.MainViewModel" />
+        <variable
             name="asteroid"
-            type="com.crayonwriter.asteroidsarecoming.Asteroid" />
+            type="com.crayonwriter.asteroidsarecoming.database.Asteroid" />
 <!-- Reference to clickListener so we can call it from databinding-->
         <variable
             name="clickListener"
             type="com.crayonwriter.asteroidsarecoming.main.AsteroidListener" />
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -2,7 +2,6 @@ package com.crayonwriter.asteroidsarecoming.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.crayonwriter.asteroidsarecoming.Asteroid
 
 
 @Dao
@@ -22,6 +21,10 @@ interface AsteroidDatabaseDao {
 
     @Query("SELECT * from asteroid_table")
     fun getAsteroidListInstance(): List<Asteroid>
+
+    @Insert
+    fun insertList(asteroidList: List<Asteroid>)
+
 
 
 }

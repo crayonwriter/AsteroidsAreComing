@@ -3,6 +3,7 @@ package com.crayonwriter.asteroidsarecoming
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.crayonwriter.asteroidsarecoming.database.Asteroid
 
 /**
  * ViewHolder that holds a single [TextView].

@@ -1,7 +1,7 @@
 package com.crayonwriter.asteroidsarecoming.api
 
 
-import com.crayonwriter.asteroidsarecoming.Asteroid
+import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.Constants
 import org.json.JSONObject
 import java.text.SimpleDateFormat
