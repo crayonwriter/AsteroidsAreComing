@@ -2,14 +2,19 @@ package com.crayonwriter.asteroidsarecoming
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.work.Logger.get
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
+import com.squareup.picasso.Picasso
+import okhttp3.HttpUrl.get
+import okhttp3.internal.http.StatusLine.get
 
 //Create BindingAdapter for the date and the name
 
 @BindingAdapter("closeApproachDateString")
 fun TextView.setCloseApproachDateString(item: Asteroid?) {
-    item?.let{
+    item?.let {
         text = item.closeApproachDate
     }
 }
@@ -25,11 +30,12 @@ fun TextView.setCodenameString(item: Asteroid?) {
 @BindingAdapter("statusIcon")
 fun ImageView.setStatusImage(item: Asteroid?) {
     item?.let {
-        setImageResource(when (item.isPotentiallyHazardous)
-        {
-            true -> R.drawable.ic_status_potentially_hazardous
-            false -> R.drawable.ic_status_normal
-        })
+        setImageResource(
+            when (item.isPotentiallyHazardous) {
+                true -> R.drawable.ic_status_potentially_hazardous
+                false -> R.drawable.ic_status_normal
+            }
+        )
     }
 }
 
@@ -70,4 +76,14 @@ fun bindTextViewToKmUnit(textView: TextView, number: Double) {
 fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
     val context = textView.context
     textView.text = String.format(context.getString(R.string.km_s_unit_format), number)
+}
+
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        Picasso.get()
+            .load("http://i.imgur.com/DvpvklR.png")
+            .into(imgView);
+    }
 }
