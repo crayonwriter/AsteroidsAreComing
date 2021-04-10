@@ -42,7 +42,8 @@ class MainViewModel(
 
             if (response.body() != null) {
                val asteroids =  parseAsteroidsJsonResult(JSONObject(response.body()))
-                suspend {database.insertList(asteroids)  }
+                viewModelScope.launch(Dispatchers.IO) {
+                    database.insertList(asteroids)  }
             } else {
                 _asteroidNetworkResponse.value = response.body()
             }
@@ -52,7 +53,6 @@ class MainViewModel(
                 _asteroidNetworkResponse.value = "Failure " + t.message            }
 
         })
-//        _asteroidNetworkResponse.value = "Response here."
     }
 
 
