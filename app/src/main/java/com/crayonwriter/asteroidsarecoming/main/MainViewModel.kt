@@ -39,7 +39,9 @@ class MainViewModel(
     val picOfDayResponse: LiveData<String>
         get() = _picOfDayResponse
 
-    private val _property = MutableLiveData<PictureOfDay>
+    private val _property = MutableLiveData<PictureOfDay>()
+    val property: LiveData<PictureOfDay>
+        get() = _property
 
     //Init block
     init {
