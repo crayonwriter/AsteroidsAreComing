@@ -12,6 +12,7 @@ import com.crayonwriter.asteroidsarecoming.api.parseAsteroidsJsonResult
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
 import com.crayonwriter.asteroidsarecoming.database.DatabaseAsteroid
+import com.crayonwriter.asteroidsarecoming.picture.PictureOfDay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -37,6 +38,8 @@ class MainViewModel(
 
     val picOfDayResponse: LiveData<String>
         get() = _picOfDayResponse
+
+    private val _property = MutableLiveData<PictureOfDay>
 
     //Init block
     init {
