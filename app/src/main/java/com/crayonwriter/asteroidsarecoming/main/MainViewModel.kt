@@ -35,7 +35,6 @@ class MainViewModel(
 
     //MutableLiveData and LiveData for the Image of the day
     private val _picOfDayResponse = MutableLiveData<String>()
-
     val picOfDayResponse: LiveData<String>
         get() = _picOfDayResponse
 
