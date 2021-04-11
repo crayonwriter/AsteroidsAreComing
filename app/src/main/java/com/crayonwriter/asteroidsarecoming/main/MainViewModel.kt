@@ -19,32 +19,25 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.await
 
 class MainViewModel(
     val database: AsteroidDatabaseDao,
-    application: Application) : AndroidViewModel(application) {
+    application: Application
+) : AndroidViewModel(application) {
 
     val asteroids = database.getAsteroidList()
 
 
     //MutableLiveData and LiveData for the asteroid data
     private val _asteroidNetworkResponse = MutableLiveData<String>()
-
     val asteroidNetworkResponse: LiveData<String>
         get() = _asteroidNetworkResponse
-
-    //MutableLiveData and LiveData for the Image of the day
-    private val _picOfDayResponse = MutableLiveData<String>()
-    val picOfDayResponse: LiveData<String>
-        get() = _picOfDayResponse
-
-    private val _property = MutableLiveData<PictureOfDay>()
-    val property: LiveData<PictureOfDay>
-        get() = _property
 
     //Init block
     init {
         getAsteroidNetworkResponse()
+        getPictureOfDayResponse()
 //        insertDataFromNetwork()
         //insertSampleAsteroidList()
     }
@@ -53,33 +46,56 @@ class MainViewModel(
         AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
 
-            if (response.body() != null) {
-               val asteroids =  parseAsteroidsJsonResult(JSONObject(response.body()))
-                viewModelScope.launch(Dispatchers.IO) {
-                    database.insertList(asteroids)  }
-            } else {
-                _asteroidNetworkResponse.value = response.body()
-            }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _asteroidNetworkResponse.value = "Failure " + t.message            }
-
-        })
-
-        PictureOfDayApi.retrofitService.getPictureOfDay().enqueue(object: Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _picOfDayResponse.value = response.body()
+                if (response.body() != null) {
+                    val asteroids = parseAsteroidsJsonResult(JSONObject(response.body()))
+                    viewModelScope.launch(Dispatchers.IO) {
+                        database.insertList(asteroids)
+                    }
+                } else {
+                    _asteroidNetworkResponse.value = response.body()
                 }
+            }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                _picOfDayResponse.value = "Failure " + t.message
+                _asteroidNetworkResponse.value = "Failure " + t.message
             }
+
         })
     }
 
+    //MutableLiveData and LiveData for the Image of the day
+    private val _picOfDayResponse = MutableLiveData<String>()
+    val picOfDayResponse: LiveData<String>
+        get() = _picOfDayResponse
+
+    //MutableLiveData and LiveData for the pictureoftheday's property
+    private val _property = MutableLiveData<PictureOfDay>()
+    val property: LiveData<PictureOfDay>
+        get() = _property
+
+    private fun getPictureOfDayResponse() {
+        viewModelScope.launch {
+            var getPropertiesDeferred = PictureOfDayApi.retrofitService.getPictureOfDay().toString()
+try {
+    var imageFromNetwork = getPropertiesDeferred.await()
+        _property.value = imageFromNetwork
+            }
+        }
+    }
 
 
+    private val _navigateToDetail = MutableLiveData<Asteroid>()
+    val navigateToDetail
+        get() = _navigateToDetail
+
+    fun onAsteroidClicked(asteroid: Asteroid) {
+        _navigateToDetail.value = asteroid
+    }
+
+    fun onNavigateToDetailCompleted() {
+        _navigateToDetail.value = null
+    }
+}
 
 //    private fun insertSampleAsteroidList() =
 //        viewModelScope.launch(Dispatchers.IO) {
@@ -125,20 +141,6 @@ class MainViewModel(
 //
 //        }
 //    }
-
-    private val _navigateToDetail = MutableLiveData<Asteroid>()
-    val navigateToDetail
-        get() = _navigateToDetail
-
-    fun onAsteroidClicked(asteroid: Asteroid) {
-        _navigateToDetail.value = asteroid
-    }
-
-    fun onNavigateToDetailCompleted() {
-        _navigateToDetail.value = null
-    }
-}
-
 
 
 
