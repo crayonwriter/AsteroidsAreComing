@@ -1,6 +1,8 @@
 package com.crayonwriter.asteroidsarecoming.main
 
 import android.app.Application
+import android.graphics.Picture
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -75,7 +77,14 @@ class MainViewModel(
 
     private fun getPictureOfDayResponse() {
         viewModelScope.launch(Dispatchers.IO) {
-            PictureOfDayApi.retrofitService.getPictureOfDay()
+            try {
+                _property.value = PictureOfDayApi.retrofitService.getPictureOfDay()
+            } catch (e:Exception) {
+                Log.e("MainViewModel", "Bad stuff is happening!")
+                e.printStackTrace()
+            }
+
+
         }
 //        viewModelScope.launch {
 //            _property.value = PictureOfDayApi.retrofitService.getPictureOfDay()

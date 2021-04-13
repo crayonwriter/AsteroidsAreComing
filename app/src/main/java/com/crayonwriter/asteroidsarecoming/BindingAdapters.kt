@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.work.Logger.get
+import com.crayonwriter.asteroidsarecoming.Constants.BASE_URL
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.squareup.picasso.Picasso
 import okhttp3.HttpUrl.get
@@ -82,7 +83,7 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
              Picasso.get()
-            .load("http://i.imgur.com/DvpvklR.png")
+            .load(imgUrl)
             .into(imgView);
     }
 }
