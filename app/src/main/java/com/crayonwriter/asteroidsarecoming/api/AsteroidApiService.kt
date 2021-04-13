@@ -1,6 +1,7 @@
 package com.crayonwriter.asteroidsarecoming.api
 
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
+import com.crayonwriter.asteroidsarecoming.picture.PictureOfDay
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
@@ -31,7 +32,7 @@ interface AsteroidApiService {
 
 interface PictureOfDayApiService {
     @GET("planetary/apod?api_key=DEMO_KEY")
-    suspend fun getPictureOfDay()
+    suspend fun getPictureOfDay() : PictureOfDay
 }
 
 //Later, just call AsteroidApi.retrofitService will return a retrofit object that implements AsteroidApiService
