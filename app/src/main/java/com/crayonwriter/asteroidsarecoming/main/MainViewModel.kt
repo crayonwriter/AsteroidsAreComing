@@ -76,9 +76,9 @@ class MainViewModel(
     private fun getPictureOfDayResponse() {
         viewModelScope.launch {
             var getPropertiesDeferred = PictureOfDayApi.retrofitService.getPictureOfDay().toString()
-try {
-    var imageFromNetwork = getPropertiesDeferred.await()
-        _property.value = imageFromNetwork
+            try {
+                var imageFromNetwork = getPropertiesDeferred.await()
+                _property.value = imageFromNetwork
             }
         }
     }

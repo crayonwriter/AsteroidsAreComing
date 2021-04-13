@@ -31,8 +31,7 @@ interface AsteroidApiService {
 
 interface PictureOfDayApiService {
     @GET("planetary/apod?api_key=DEMO_KEY")
-    fun getPictureOfDay():
-            Call<String>
+    suspend fun getPictureOfDay()
 }
 
 //Later, just call AsteroidApi.retrofitService will return a retrofit object that implements AsteroidApiService
