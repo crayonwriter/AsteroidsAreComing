@@ -81,8 +81,7 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Picasso.get()
+             Picasso.get()
             .load("http://i.imgur.com/DvpvklR.png")
             .into(imgView);
     }

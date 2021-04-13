@@ -74,9 +74,12 @@ class MainViewModel(
         get() = _property
 
     private fun getPictureOfDayResponse() {
-        viewModelScope.launch {
-            _property.value = PictureOfDayApi.retrofitService.getPictureOfDay()
-                            }
+        viewModelScope.launch(Dispatchers.IO) {
+            PictureOfDayApi.retrofitService.getPictureOfDay()
+        }
+//        viewModelScope.launch {
+//            _property.value = PictureOfDayApi.retrofitService.getPictureOfDay()
+//        }
     }
 
 
