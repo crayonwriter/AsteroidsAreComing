@@ -17,6 +17,7 @@ import com.crayonwriter.asteroidsarecoming.database.DatabaseAsteroid
 import com.crayonwriter.asteroidsarecoming.picture.PictureOfDay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -76,10 +77,14 @@ class MainViewModel(
         get() = _property
 
     private fun getPictureOfDayResponse() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             try {
-                _property.value = PictureOfDayApi.retrofitService.getPictureOfDay()
-            } catch (e:Exception) {
+                val result = withContext(Dispatchers.IO) {
+                    PictureOfDayApi.retrofitService.getPictureOfDay()
+                }
+                _property.value = result
+
+            } catch (e: Exception) {
                 Log.e("MainViewModel", "Bad stuff is happening!")
                 e.printStackTrace()
             }
