@@ -22,7 +22,7 @@ interface AsteroidDatabaseDao {
     @Query("SELECT * from asteroid_table")
     fun getAsteroidListInstance(): List<Asteroid>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertList(asteroidList: List<Asteroid>)
 
 
