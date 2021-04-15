@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 //Database class: one entity from the one table, version #,
 //and not a complex database so no need for exportSchema to be true
-@Database(entities = [Asteroid::class], version = 1, exportSchema = false)
+@Database(entities = arrayOf(Asteroid::class, DatabaseAsteroid::class), version = 2, exportSchema = false)
 abstract class AsteroidDatabase : RoomDatabase() {
     abstract val asteroidDatabaseDao: AsteroidDatabaseDao
 
