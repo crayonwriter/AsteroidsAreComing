@@ -18,7 +18,7 @@ abstract class AsteroidDatabase : RoomDatabase() {
         private var INSTANCE: AsteroidDatabase? = null
         //Return a reference to the Asteroid Database. It needs
         //a context because the database builder needs a context
-        fun getInstance(context: Context) : AsteroidDatabase {
+        fun getDatabase(context: Context) : AsteroidDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 

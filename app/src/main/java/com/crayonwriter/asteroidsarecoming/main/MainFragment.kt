@@ -24,7 +24,7 @@ class MainFragment : Fragment() {
         val application = requireNotNull(this.activity).application
 
         //Reference to the data source via a reference to the dao
-        val dataSource = AsteroidDatabase.getInstance(application).asteroidDatabaseDao
+        val dataSource = AsteroidDatabase.getDatabase(application).asteroidDatabaseDao
 
         //create an instance of the viewmodelfactory
         val viewModelFactory = MainViewModelFactory(dataSource, application)

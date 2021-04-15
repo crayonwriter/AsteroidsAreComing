@@ -10,7 +10,7 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
     //To refresh the offline cache
     suspend fun refreshAsteroids() {
         withContext(Dispatchers.IO) {
-
+            val asteroidList = Network.
         }
     }
 }
