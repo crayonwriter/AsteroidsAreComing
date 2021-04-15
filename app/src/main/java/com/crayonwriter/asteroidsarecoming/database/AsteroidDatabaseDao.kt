@@ -25,6 +25,11 @@ interface AsteroidDatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertList(asteroidList: List<Asteroid>)
 
+//Queries regarding DatabaseAsteroid
+    @Query("select * from databaseasteroid")
+    fun getAsteroids(): List<DatabaseAsteroid>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg asteroids: DatabaseAsteroid)
 
 }

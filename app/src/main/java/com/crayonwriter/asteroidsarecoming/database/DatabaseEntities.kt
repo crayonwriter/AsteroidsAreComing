@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 //Create the DatabaseEntities class, adding annotations for the class and the primary key.
 //Create the DatabaseAsteroid database object. Create a Room @Entity called DatabaseAndroid
 
-@Entity(tableName = "asteroidList_table")
+@Entity
 data class DatabaseAsteroid constructor(
     @PrimaryKey
     val asteroidId: Long,
@@ -19,6 +19,7 @@ data class DatabaseAsteroid constructor(
     val isPotentiallyHazardous: Boolean
 )
 
+//Extension function: converts from database objects to domain objects
 fun List<DatabaseAsteroid>.asDomainModel(): List<Asteroid> {
     return map {
         Asteroid (
