@@ -12,8 +12,11 @@ import com.crayonwriter.asteroidsarecoming.api.PictureOfDayApi
 import com.crayonwriter.asteroidsarecoming.api.PictureOfDayApiService
 import com.crayonwriter.asteroidsarecoming.api.parseAsteroidsJsonResult
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
+import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabase
+import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabase.Companion.getDatabase
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabaseDao
 import com.crayonwriter.asteroidsarecoming.database.DatabaseAsteroid
+import com.crayonwriter.asteroidsarecoming.network.AsteroidRepository
 import com.crayonwriter.asteroidsarecoming.picture.PictureOfDay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,46 +28,50 @@ import retrofit2.Response
 import retrofit2.await
 
 class MainViewModel(
-    val database: AsteroidDatabaseDao,
-    application: Application
-) : AndroidViewModel(application) {
+    application: Application) : AndroidViewModel(application)
+//    val database: AsteroidDatabaseDao,
+//    application: Application
+//) : AndroidViewModel(application)
+{
 
-    val asteroids = database.getAsteroidList()
-
+    //val asteroids = database.getAsteroidList()
+    private val database = getDatabase(application)
+    private val asteroidRepository = AsteroidRepository(database)
 
     //MutableLiveData and LiveData for the asteroid data
-    private val _asteroidNetworkResponse = MutableLiveData<String>()
-    val asteroidNetworkResponse: LiveData<String>
-        get() = _asteroidNetworkResponse
+//    private val _asteroidNetworkResponse = MutableLiveData<String>()
+//    val asteroidNetworkResponse: LiveData<String>
+//        get() = _asteroidNetworkResponse
 
     //Init block
     init {
-        getAsteroidNetworkResponse()
+
+        //getAsteroidNetworkResponse()
         getPictureOfDayResponse()
 //        insertDataFromNetwork()
         //insertSampleAsteroidList()
     }
 
-    private fun getAsteroidNetworkResponse() {
-        AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-
-                if (response.body() != null) {
-                    val asteroids = parseAsteroidsJsonResult(JSONObject(response.body()))
-                    viewModelScope.launch(Dispatchers.IO) {
-                        database.insertList(asteroids)
-                    }
-                } else {
-                    _asteroidNetworkResponse.value = response.body()
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _asteroidNetworkResponse.value = "Failure " + t.message
-            }
-
-        })
-    }
+//    private fun getAsteroidNetworkResponse() {
+//        AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
+//            override fun onResponse(call: Call<String>, response: Response<String>) {
+//
+//                if (response.body() != null) {
+//                    val asteroids = parseAsteroidsJsonResult(JSONObject(response.body()))
+//                    viewModelScope.launch(Dispatchers.IO) {
+//                        database.insertList(asteroids)
+//                    }
+//                } else {
+//                    _asteroidNetworkResponse.value = response.body()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<String>, t: Throwable) {
+//                _asteroidNetworkResponse.value = "Failure " + t.message
+//            }
+//
+//        })
+//    }
 
     //MutableLiveData and LiveData for the Image of the day
     private val _picOfDayResponse = MutableLiveData<String>()
@@ -88,12 +95,7 @@ class MainViewModel(
                 Log.e("MainViewModel", "Bad stuff is happening!")
                 e.printStackTrace()
             }
-
-
         }
-//        viewModelScope.launch {
-//            _property.value = PictureOfDayApi.retrofitService.getPictureOfDay()
-//        }
     }
 
 
@@ -109,51 +111,5 @@ class MainViewModel(
         _navigateToDetail.value = null
     }
 }
-
-//    private fun insertSampleAsteroidList() =
-//        viewModelScope.launch(Dispatchers.IO) {
-//            listOf(
-//                Asteroid(
-//                    0L, "Theda", "January 2", 2.45,
-//                    4.3, 5.3, 300.0, true
-//                ),
-//                Asteroid(
-//                    1L, "Gabrielle", "June 22", 4.2,
-//                    3.4, 5.55, 500.0, false
-//                ),
-//                Asteroid(
-//                    2L, "Jade", "May 20", 45.3, 400.2,
-//                    76.1, 1000.0, true
-//                )
-//            )
-//                .apply {
-//                    val existingList = database.getAsteroidListInstance()
-//                    if (existingList.isEmpty()) {
-//                        this.forEach {
-//                            database.insert(it)
-//                        }
-//                    } else {
-//                        this.forEach {
-//                            database.update(it)
-//                        }
-//                    }
-//                }
-//        }
-
-//    private fun insertDataFromNetwork() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            apply {
-//                    val existingList = database.getAsteroidListInstance()
-//                    if (existingList.isEmpty()) {
-//                            database.insertList(asteroidList)
-//                        } else {
-//                            database.update(asteroid = Asteroid)
-//                        }
-//                    }
-//                }
-//
-//        }
-//    }
-
 
 
