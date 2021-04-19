@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 //This is the network layer. It is the api that the viewmodel will use to communicate with a web service.
 
@@ -30,6 +31,10 @@ private val retrofit = Retrofit.Builder()
 interface AsteroidService {
 @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
 fun getAsteroidList() : Deferred<NetworkAsteroidContainer>
+
+@GET("neo/rest/v1/feed?api_key=DEMO_KEY")
+suspend fun getAsteroids(@Query("start_date") startDate: String,
+                         @Query("end_date") endDate: String): String
 }
 
 interface AsteroidApiService {
@@ -64,6 +69,6 @@ object Network {
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 
-    val asteroids = retrofit.create(AsteroidService::class.java)
+    val asteroids: AsteroidService = retrofit.create(AsteroidService::class.java)
 }
 

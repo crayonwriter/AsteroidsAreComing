@@ -45,33 +45,36 @@ class MainViewModel(
 
     //Init block
     init {
-
-        getAsteroidNetworkResponse()
+        viewModelScope.launch {
+            asteroidRepository.refreshAsteroids()
+        }
+       // getAsteroidNetworkResponse()
         getPictureOfDayResponse()
 //        insertDataFromNetwork()
         //insertSampleAsteroidList()
     }
 
-    private fun getAsteroidNetworkResponse() {
-        AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-
-                if (response.body() != null) {
-                    val asteroids = parseAsteroidsJsonResult(JSONObject(response.body()))
-                    viewModelScope.launch(Dispatchers.IO) {
-                        databaseDao.insertList(asteroids)
-                    }
-                } else {
-                    _asteroidNetworkResponse.value = response.body()
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _asteroidNetworkResponse.value = "Failure " + t.message
-            }
-
-        })
-    }
+    val asteroidList = asteroidRepository.asteroids
+//    private fun getAsteroidNetworkResponse() {
+//        AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
+//            override fun onResponse(call: Call<String>, response: Response<String>) {
+//
+//                if (response.body() != null) {
+//                    val asteroids = parseAsteroidsJsonResult(JSONObject(response.body()))
+//                    viewModelScope.launch(Dispatchers.IO) {
+//                        databaseDao.insertList(asteroids)
+//                    }
+//                } else {
+//                    _asteroidNetworkResponse.value = response.body()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<String>, t: Throwable) {
+//                _asteroidNetworkResponse.value = "Failure " + t.message
+//            }
+//
+//        })
+//    }
 
     //MutableLiveData and LiveData for the Image of the day
     private val _picOfDayResponse = MutableLiveData<String>()
