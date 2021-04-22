@@ -5,6 +5,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.crayonwriter.asteroidsarecoming.api.AsteroidApi
 import com.crayonwriter.asteroidsarecoming.api.Network
+import com.crayonwriter.asteroidsarecoming.api.nasaApi
 import com.crayonwriter.asteroidsarecoming.api.parseAsteroidsJsonResult
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabase
@@ -25,9 +26,11 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
             it.asDomainModel()
         }
 
+
     //To refresh the offline cache
     suspend fun refreshAsteroids() {
         withContext(Dispatchers.IO) {
+
             val asteroidList = Network.asteroids.getAsteroidList().await()
             AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -45,4 +48,7 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
             database.asteroidDatabaseDao.insertAll(*asteroidList.asDatabaseModel())
         }
     }
+
+    suspend fun getAsteroids(startDate: String, endDate: String): List<Asteroid> =
+        parseAsteroidsJsonResult(JSONObject(nasaApi.getAsteroids(startDate, endDate)))
 }

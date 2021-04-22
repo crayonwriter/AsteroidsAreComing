@@ -23,15 +23,17 @@ private val moshi = Moshi.Builder()
     .build()
 
 private val retrofit = Retrofit.Builder()
-  .addConverterFactory(ScalarsConverterFactory.create())
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
+  .addConverterFactory(ScalarsConverterFactory.create())
+//    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .build()
 
 interface AsteroidService {
-@GET("neo/rest/v1/feed?api_key=DEMO_KEY")
-fun getAsteroidList() : Deferred<NetworkAsteroidContainer>
+    @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
+    fun getAsteroidList(): Deferred<NetworkAsteroidContainer>
+}
 
+interface nasaApi {
 @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
 suspend fun getAsteroids(@Query("start_date") startDate: String,
                          @Query("end_date") endDate: String): String
