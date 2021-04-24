@@ -33,17 +33,17 @@ interface AsteroidService {
     fun getAsteroidList(): Deferred<NetworkAsteroidContainer>
 }
 
-interface nasaApi {
-@GET("neo/rest/v1/feed?api_key=DEMO_KEY")
-suspend fun getAsteroids(@Query("start_date") startDate: String,
-                         @Query("end_date") endDate: String): String
-}
-
-interface AsteroidApiService {
-    @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
-    fun getProperties():
-            Call<String>
-}
+//interface nasaApi {
+//@GET("neo/rest/v1/feed?api_key=DEMO_KEY")
+//suspend fun getAsteroids(@Query("start_date") startDate: String,
+//                         @Query("end_date") endDate: String): String
+//}
+//
+//interface AsteroidApiService {
+//    @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
+//    fun getProperties():
+//            Call<String>
+//}
 
 interface PictureOfDayApiService {
     @GET("planetary/apod?api_key=DEMO_KEY")
