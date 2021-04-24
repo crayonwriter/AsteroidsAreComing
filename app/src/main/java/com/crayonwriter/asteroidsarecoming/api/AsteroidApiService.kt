@@ -30,7 +30,8 @@ private val retrofit = Retrofit.Builder()
 
 interface AsteroidService {
     @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
-    fun getAsteroidList(): Deferred<NetworkAsteroidContainer>
+    suspend fun getAsteroids(@Query("start_date") startDate: String,
+                       @Query("end_date") endDate: String): String
 }
 
 //interface nasaApi {
