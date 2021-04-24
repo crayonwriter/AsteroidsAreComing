@@ -25,7 +25,7 @@ private val moshi = Moshi.Builder()
 private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
   .addConverterFactory(ScalarsConverterFactory.create())
-//    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .build()
 
 interface AsteroidService {
