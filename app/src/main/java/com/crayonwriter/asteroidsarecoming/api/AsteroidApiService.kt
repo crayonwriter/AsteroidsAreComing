@@ -52,26 +52,26 @@ interface PictureOfDayApiService {
 }
 
 //Later, just call AsteroidApi.retrofitService will return a retrofit object that implements AsteroidApiService
-object AsteroidApi {
-    val retrofitService: AsteroidApiService by lazy {
-        retrofit.create(AsteroidApiService::class.java)
-    }
-}
-
-object PictureOfDayApi {
-    val retrofitService: PictureOfDayApiService by lazy {
-        retrofit.create(PictureOfDayApiService::class.java)
-    }
-}
+//object AsteroidApi {
+//    val retrofitService: AsteroidApiService by lazy {
+//        retrofit.create(AsteroidApiService::class.java)
+//    }
+//}
+//
+//object PictureOfDayApi {
+//    val retrofitService: PictureOfDayApiService by lazy {
+//        retrofit.create(PictureOfDayApiService::class.java)
+//    }
+//}
 
 object Network {
-    // Configure retrofit to parse JSON and use coroutines
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .build()
-
+    val pictureOfDay: PictureOfDayApiService = retrofit.create(PictureOfDayApiService::class.java)
     val asteroids: AsteroidService = retrofit.create(AsteroidService::class.java)
+// Configure retrofit to parse JSON and use coroutines
+//    private val retrofit = Retrofit.Builder()
+//        .baseUrl(BASE_URL)
+//        .addConverterFactory(MoshiConverterFactory.create(moshi))
+//        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+//        .build()
 }
 
