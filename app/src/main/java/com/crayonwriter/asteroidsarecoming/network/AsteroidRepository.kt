@@ -25,8 +25,8 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         Transformations.map(database.asteroidDatabaseDao.getAsteroids()) {
             it.asDomainModel()
         }
-    suspend fun getAsteroids(startDate: String, endDate: String): List<Asteroid> =
-        parseAsteroidsJsonResult(JSONObject(nasaApi.getAsteroids(startDate, endDate)))
+//    suspend fun getAsteroids(startDate: String, endDate: String): List<Asteroid> =
+//        parseAsteroidsJsonResult(JSONObject(nasaApi.getAsteroids(startDate, endDate)))
 
     //To refresh the offline cache
     suspend fun refreshAsteroids() {
