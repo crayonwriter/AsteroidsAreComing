@@ -7,7 +7,7 @@ import com.crayonwriter.asteroidsarecoming.database.DatabaseAsteroid
 import com.squareup.moshi.JsonClass
 
 // Converts NetworkAsteroid into Asteroid using the map function from the Kotlin standard library.
-fun NetworkAsteroidContainer.asDatabaseModel(): Array<DatabaseAsteroid> {
+fun NetworkAsteroidContainer.asDatabaseModel(): List<DatabaseAsteroid> {
     return asteroids.map {
         DatabaseAsteroid(
             asteroidId = it.asteroidId,
@@ -19,7 +19,7 @@ fun NetworkAsteroidContainer.asDatabaseModel(): Array<DatabaseAsteroid> {
             distanceFromEarth = it.distanceFromEarth,
             isPotentiallyHazardous = it.isPotentiallyHazardous
         )
-    }.toTypedArray()
+    }
 }
 
 @JsonClass(generateAdapter = true)
