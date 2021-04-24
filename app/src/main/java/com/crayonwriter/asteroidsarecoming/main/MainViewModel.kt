@@ -34,7 +34,7 @@ class MainViewModel(
 ) : AndroidViewModel(application)
 {
 
-    private val nasaApi = retrofit.getClient().create(NasaApi::class.java)
+//    private val nasaApi = retrofit.getClient().create(NasaApi::class.java)
     val asteroids = databaseDao.getAsteroidList()
     private val database = getDatabase(application)
     private val asteroidRepository = AsteroidRepository(database)
@@ -92,7 +92,7 @@ class MainViewModel(
         viewModelScope.launch() {
             try {
                 val result = withContext(Dispatchers.IO) {
-                    PictureOfDayApi.retrofitService.getPictureOfDay()
+                    PictureOfDayApiService.getPictureOfDay()
                 }
                 _property.value = result
 

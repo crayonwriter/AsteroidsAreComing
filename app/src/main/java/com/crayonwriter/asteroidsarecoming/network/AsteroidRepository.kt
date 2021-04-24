@@ -1,12 +1,10 @@
 package com.crayonwriter.asteroidsarecoming.network
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.crayonwriter.asteroidsarecoming.api.AsteroidApi
-import com.crayonwriter.asteroidsarecoming.api.Network
-import com.crayonwriter.asteroidsarecoming.api.nasaApi
-import com.crayonwriter.asteroidsarecoming.api.parseAsteroidsJsonResult
+import com.crayonwriter.asteroidsarecoming.api.*
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.AsteroidDatabase
 import com.crayonwriter.asteroidsarecoming.database.asDomainModel
@@ -20,7 +18,7 @@ import retrofit2.Response
 
 //Repository for getting and saving asteroids
 class AsteroidRepository(private val database: AsteroidDatabase) {
-    private val nasaApi = retrofit.getClient().create(NasaApi::class.java)
+    //private val nasaApi = retrofit.getClient().create(NasaApi::class.java)
     val asteroids: LiveData<List<Asteroid>> =
         Transformations.map(database.asteroidDatabaseDao.getAsteroids()) {
             it.asDomainModel()
@@ -31,24 +29,14 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
     //To refresh the offline cache
     suspend fun refreshAsteroids() {
         withContext(Dispatchers.IO) {
-
-            val asteroidList = Network.asteroids.getAsteroidList().await()
-            AsteroidApi.retrofitService.getProperties().enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-
-
-                        parseAsteroidsJsonResult(JSONObject(response.body()))
-
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-
-                }
-
-            })
-            database.asteroidDatabaseDao.insertAll(*asteroidList.asDatabaseModel())
+            try {
+                val response = asteroidService.getAsteroids
+                parseAsteroidsJsonResult(JSONObject(response.body()))
+                database.asteroidDatabaseDao.insertAll(asteroids.asDatabaseModel())
+            } catch (e: Exception) {
+                Log.e("MainViewModel", "The world is ending!!")
+                e.printStackTrace()
+            }
         }
     }
-
-
 }
