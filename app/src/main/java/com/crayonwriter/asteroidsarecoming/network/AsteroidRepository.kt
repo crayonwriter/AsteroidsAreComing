@@ -20,12 +20,13 @@ import retrofit2.Response
 
 //Repository for getting and saving asteroids
 class AsteroidRepository(private val database: AsteroidDatabase) {
-
+    private val nasaApi = retrofit.getClient().create(NasaApi::class.java)
     val asteroids: LiveData<List<Asteroid>> =
         Transformations.map(database.asteroidDatabaseDao.getAsteroids()) {
             it.asDomainModel()
         }
-
+    suspend fun getAsteroids(startDate: String, endDate: String): List<Asteroid> =
+        parseAsteroidsJsonResult(JSONObject(nasaApi.getAsteroids(startDate, endDate)))
 
     //To refresh the offline cache
     suspend fun refreshAsteroids() {
@@ -49,6 +50,5 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         }
     }
 
-    suspend fun getAsteroids(startDate: String, endDate: String): List<Asteroid> =
-        parseAsteroidsJsonResult(JSONObject(nasaApi.getAsteroids(startDate, endDate)))
+
 }
