@@ -1,7 +1,5 @@
 package com.crayonwriter.asteroidsarecoming.network
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 import com.crayonwriter.asteroidsarecoming.database.Asteroid
 import com.crayonwriter.asteroidsarecoming.database.DatabaseAsteroid
 import com.squareup.moshi.JsonClass
@@ -23,7 +21,7 @@ fun NetworkAsteroidContainer.asDatabaseModel(): List<DatabaseAsteroid> {
 }
 
 @JsonClass(generateAdapter = true)
-data class NetworkAsteroidContainer(val asteroids: List<NetworkAsteroid>)
+data class NetworkAsteroidContainer(val asteroids: ArrayList<Asteroid>)
 
 @JsonClass(generateAdapter = true)
 data class NetworkAsteroid(
