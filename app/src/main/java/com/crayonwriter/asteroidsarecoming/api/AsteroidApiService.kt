@@ -18,60 +18,30 @@ import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.nasa.gov/"
 
-private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
-
-private val retrofit = Retrofit.Builder()
-    .baseUrl(BASE_URL)
-  .addConverterFactory(ScalarsConverterFactory.create())
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .build()
-
 interface AsteroidService {
     @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
     suspend fun getAsteroids(@Query("start_date") startDate: String,
-                       @Query("end_date") endDate: String): String
+                             @Query("end_date") endDate: String): String
 }
-
-//interface nasaApi {
-//@GET("neo/rest/v1/feed?api_key=DEMO_KEY")
-//suspend fun getAsteroids(@Query("start_date") startDate: String,
-//                         @Query("end_date") endDate: String): String
-//}
-//
-//interface AsteroidApiService {
-//    @GET("neo/rest/v1/feed?api_key=DEMO_KEY")
-//    fun getProperties():
-//            Call<String>
-//}
 
 interface PictureOfDayApiService {
     @GET("planetary/apod?api_key=DEMO_KEY")
     suspend fun getPictureOfDay() : PictureOfDay
 }
 
-//Later, just call AsteroidApi.retrofitService will return a retrofit object that implements AsteroidApiService
-//object AsteroidApi {
-//    val retrofitService: AsteroidApiService by lazy {
-//        retrofit.create(AsteroidApiService::class.java)
-//    }
-//}
-//
-//object PictureOfDayApi {
-//    val retrofitService: PictureOfDayApiService by lazy {
-//        retrofit.create(PictureOfDayApiService::class.java)
-//    }
-//}
-
 object Network {
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
     val pictureOfDay: PictureOfDayApiService = retrofit.create(PictureOfDayApiService::class.java)
     val asteroids: AsteroidService = retrofit.create(AsteroidService::class.java)
-// Configure retrofit to parse JSON and use coroutines
-//    private val retrofit = Retrofit.Builder()
-//        .baseUrl(BASE_URL)
-//        .addConverterFactory(MoshiConverterFactory.create(moshi))
-//        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-//        .build()
 }
+
 
