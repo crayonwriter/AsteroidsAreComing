@@ -13,8 +13,7 @@ import org.json.JSONObject
 
 //Repository for getting and saving asteroids
 class AsteroidRepository(private val database: AsteroidDatabase) {
-    //private val nasaApi = retrofit.getClient().create(NasaApi::class.java)
-    val asteroids: LiveData<List<Asteroid>> =
+        val asteroids: LiveData<List<Asteroid>> =
         Transformations.map(database.asteroidDatabaseDao.getAsteroids()) {
             it.asDomainModel()
         }
