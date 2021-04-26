@@ -11,7 +11,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 
-@Entity(tableName = "asteroid_table")
 data class Asteroid(
     //Annotate each column and give each a custom name, except for the PrimaryKey
     @PrimaryKey() val asteroidId: Long,
