@@ -9,6 +9,11 @@ import retrofit2.HttpException
 
 class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
     CoroutineWorker(appContext, params) {
+
+    //WORK_NAME to uniquely identify the worker
+    companion object {
+        const val WORK_NAME = "RefreshDataWorker"
+    }
     override suspend fun doWork(): Result {
         //get a database and a repository
         val database = getDatabase(applicationContext)
