@@ -14,6 +14,7 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
     companion object {
         const val WORK_NAME = "RefreshDataWorker"
     }
+
     override suspend fun doWork(): Result {
         //get a database and a repository
         val database = getDatabase(applicationContext)

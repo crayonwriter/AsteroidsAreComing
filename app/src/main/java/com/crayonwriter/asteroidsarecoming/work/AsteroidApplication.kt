@@ -1,9 +1,7 @@
 package com.crayonwriter.asteroidsarecoming.work
 
 import android.app.Application
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,15 +20,22 @@ class AsteroidApplication : Application() {
         setupRecurringWork()
     }
 
-private fun setupRecurringWork() {
-    val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(
-                1, TimeUnit.DAYS
-            ).build()
+    private fun setupRecurringWork() {
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
 
-            WorkManager.getInstance().enqueueUniquePeriodicWork(
-                RefreshDataWorker.WORK_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
-                repeatingRequest
-            )
-        }
+        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(
+            1, TimeUnit.DAYS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance().enqueueUniquePeriodicWork(
+            RefreshDataWorker.WORK_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            repeatingRequest
+        )
     }
+}
