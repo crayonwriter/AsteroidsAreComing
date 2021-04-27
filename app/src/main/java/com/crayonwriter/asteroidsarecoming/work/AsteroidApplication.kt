@@ -11,15 +11,19 @@ import java.util.concurrent.TimeUnit
 
 class AsteroidApplication : Application() {
 
-    private val applicationScope = CoroutineScope(Dispatchers.Default)
+    val applicationScope = CoroutineScope(Dispatchers.Default)
+
     override fun onCreate() {
         super.onCreate()
         delayedInit()
     }
 
-    private fun delayedInit() {
-        applicationScope.launch {
-            val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(
+    private fun delayedInit() = applicationScope.launch {
+        setupRecurringWork()
+    }
+
+private fun setupRecurringWork() {
+    val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(
                 1, TimeUnit.DAYS
             ).build()
 
@@ -30,4 +34,3 @@ class AsteroidApplication : Application() {
             )
         }
     }
-}
